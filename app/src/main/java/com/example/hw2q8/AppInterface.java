@@ -1,10 +1,10 @@
 package com.example.hw2q8;
 
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -37,7 +37,6 @@ public class AppInterface extends GridLayout
             for(int y = 0 ; y < BORDSIZE ; y++ )
             {
                 board[x][y] = new EditText(context);
-                board[x][y].setBackgroundColor(Color.parseColor("#787878"));
                 board[x][y].setText("");
                 board[x][y].setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 board[x][y].setGravity(Gravity.CENTER);
@@ -59,6 +58,53 @@ public class AppInterface extends GridLayout
 
     } //end of constructor
 
+    //method to display the board
+    public void drawInitialBoard(int[][] brd)
+    {
+        //display contents of board
+        for(int x  = 0 ; x < BORDSIZE ; x++)
+        {
+            for (int y = 0; y < BORDSIZE; y++)
+            {
+                //if value = o
+                if(brd[x][y]==0)
+                {
+                    //display empty string
+                    board[x][y].setText("");
+                    //set background color
+                    board[x][y].setBackgroundColor(Color.parseColor("#A8A8A8"));
+                }
+                else
+                {
+                    //display value
+                    board[x][y].setText(""+brd[x][y]);
+                    //set different background color
+                    board[x][y].setBackgroundColor(Color.parseColor("#606060"));
+                    //disable edit text
+                    board[x][y].setEnabled(false);
+                }
+            }
+        }
+    }
 
+    //method to get the input from the edit text
+    public String getInput(int x ,int y)
+    {
+        String strInput = board[x][y].getText().toString();
+
+        return strInput;
+    }
+
+    //method displays an empty text at  given location
+    public void clear(int x,int y)
+    {
+        board[x][y].setText("");
+    }
+
+    //method adds a textChange handler to edit text
+    public void setTextChangeHandler(TextWatcher temp, int x, int y)
+    {
+        board[x][y].addTextChangedListener(temp);
+    }
 
 }
