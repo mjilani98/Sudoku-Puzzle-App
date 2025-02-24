@@ -1,10 +1,12 @@
 package com.example.hw2q8;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -130,10 +132,69 @@ public class MainActivity extends AppCompatActivity {
                     appInterface.clear(x,y);
 
                 }
-
-
             }
 
+            if(game.checkCompleted())
+            {
+                showDialogBox();
+            }
+
+        }
+    }
+    private void showDialogBox()
+    {
+        //create a dialog
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+
+        //setting the message of the dialog box
+        dialog.setMessage("Success , Do you want to play again?");
+
+        //creating a listener for the dialog box
+        DialogBoxListener handler = new DialogBoxListener();
+
+        //setting the buttons labels
+        dialog.setPositiveButton("Yes",handler);
+        dialog.setNegativeButton("No",handler);
+        dialog.setNeutralButton("Cancel",handler);
+
+        //show the dialog box
+        dialog.show();
+    }
+
+    private class DialogBoxListener implements DialogInterface.OnClickListener
+    {
+        @Override
+        public void onClick(DialogInterface dialog, int id)
+        {
+
+            //if the positive button is clicked, play a new game ;
+            if(id == -1)
+            {
+                //create a new game
+                game = new Game();
+                int[][] newBoard = game.getBoard();
+
+
+                //display the new game to the screen
+                appInterface.drawInitialBoard(newBoard);
+
+                //resetting the text change handlers for the new edit texts
+                for(int x = 0; x < SIZE; x++)
+                {
+                    for(int y = 0; y < SIZE; y++)
+                    {
+                        TextChangeHandler temp = new TextChangeHandler(x, y);
+                        appInterface.setTextChangeHandler(temp, x, y);
+                    }
+                }
+
+            }
+            //if the negative button is clicked, destroy the app
+            else if (id == -2)
+            {
+                MainActivity.this.finish();
+            }
+            else;
         }
     }
 }

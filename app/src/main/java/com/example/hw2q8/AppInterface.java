@@ -66,6 +66,9 @@ public class AppInterface extends GridLayout
         {
             for (int y = 0; y < BORDSIZE; y++)
             {
+
+                board[x][y].setEnabled(true);
+
                 //if value = o
                 if(brd[x][y]==0)
                 {
@@ -77,7 +80,7 @@ public class AppInterface extends GridLayout
                 else
                 {
                     //display value
-                    board[x][y].setText(""+brd[x][y]);
+                    board[x][y].setText(String.valueOf(brd[x][y]));
                     //set different background color
                     board[x][y].setBackgroundColor(Color.parseColor("#606060"));
                     //disable edit text

@@ -78,5 +78,21 @@ public class Game
         return false;
     }
 
+    //method that checks if the board is completed
+    //if there is a 0  in the board , it is not completed yet -> returns false
+    public boolean checkCompleted()
+    {
+        for(int x = 0 ; x <board.length ; x++)
+        {
+            for(int y =0 ; y < board.length;y++)
+            {
+                if(board[x][y] == 0)
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
 
 }
